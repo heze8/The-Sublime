@@ -105,7 +105,7 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             SpeakToNearby();
             isSpeaking = false;
-            DialogueObject.CreateDialogueObject(gameObject, typeManager.GetCurrentDialogueInput(), diaDuration, dialogPrefab);
+            DialogueObject.CreateDialogueObject(gameObject, typeManager.GetCurrentDialogueInput(), diaDuration);
             typeManager.ClearDialogue();
         }
         else 
@@ -121,7 +121,7 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             var dialogueManager = people.gameObject.GetComponent<DialogueNPC>();
             if (dialogueManager != null) 
-                dialogueManager.Speak(typeManager.GetCurrentDialogueInput());
+                dialogueManager.SpokenAt(typeManager.GetCurrentDialogueInput());
         }
     }
 
@@ -135,16 +135,22 @@ public class DialogueManager : Singleton<DialogueManager>
     /// </summary>
     /// <param name="firstSentence"></param> sentence is the one where the error is found.
     /// <param name="secondSentence"></param> sentence is the crosschecked sentence.
-    /// <returns></returns> the index by char of the error, returns the length of the string if no error.
+    /// <returns></returns> the index by char of the error, returns the -1 if no error.
     public static int GetIndexOfError (string firstSentence, string secondSentence)
     {
-        if (!secondSentence.Any()) return 0;
+        if (!secondSentence.Any()) return -1;
         
         var sentenceChars = secondSentence.ToCharArray();
         int dialogueLength = firstSentence.Length;
+        
+        
         for (var i = 0; i < dialogueLength; i++)
         {
-            if (i >= sentenceChars.Length || !sentenceChars[i].Equals(firstSentence[i]))
+            if (i >= sentenceChars.Length)
+            {
+                return -1;
+            }
+            if ( !sentenceChars[i].Equals(firstSentence[i]))
             {
                 return i;
             }

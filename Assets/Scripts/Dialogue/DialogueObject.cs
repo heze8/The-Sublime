@@ -11,21 +11,35 @@ public class DialogueObject : MonoBehaviour
 {
     //0 to 1
     public float opacity;
-    private SpriteRenderer spriteRenderer;
-    private TextMeshPro textMesh;
+    [HideInInspector]
+    public SpriteRenderer spriteRenderer;
+    [HideInInspector]
+    public TextMeshPro textMesh;
 
     /// <summary>
     /// Create dialogue object in parent location
     /// </summary>
     /// <returns></returns> the dialogue game object
-    public static GameObject CreateDialogueObject(GameObject parent, string sentence, float duration, GameObject dialogueObj)
+    public static DialogueObject CreateDialogueObject(GameObject parent, string sentence, float duration = -1)
     {
-        var instantiate = Instantiate(dialogueObj, parent.transform.position, parent.transform.rotation, parent.transform);
-        instantiate.GetComponent<TextMeshPro>().text = sentence;
+        
+        var dialogPrefab = DialogueManager.Instance.dialogPrefab;
+        var instantiate = Instantiate(dialogPrefab, parent.transform.position, parent.transform.rotation, parent.transform);
+
         var dialogueObject = instantiate.GetComponent<DialogueObject>();
-        DOTween.To(() => dialogueObject.opacity, x => dialogueObject.opacity = x, 0, duration).SetEase(Ease.InCubic);
-        Destroy(instantiate, duration);
-        return instantiate;
+        dialogueObject.textMesh = instantiate.GetComponentInChildren<TextMeshPro>();
+        dialogueObject.spriteRenderer = instantiate.GetComponentInChildren<SpriteRenderer>();
+
+        dialogueObject.textMesh.text = sentence;
+        
+        //destroy obj if duration is +ve
+        if (duration > 0)
+        {
+            DOTween.To(() => dialogueObject.opacity, x => dialogueObject.opacity = x, 0, duration).SetEase(Ease.InCubic);
+            Destroy(instantiate, duration);
+        }
+      
+        return dialogueObject;
     }
     
     public void Start()
@@ -42,7 +56,6 @@ public class DialogueObject : MonoBehaviour
             spriteRendererSize = new Vector2();
         }
         spriteRenderer.size = spriteRendererSize;
-        Debug.Log(spriteRendererSize);
         var color = spriteRenderer.color;
         color.a = opacity;
         spriteRenderer.color = color;
@@ -50,5 +63,10 @@ public class DialogueObject : MonoBehaviour
         color = textMesh.color;
         color.a = opacity;
         textMesh.color = color;
+    }
+
+    public void Say(string currDialogue)
+    {
+        textMesh.text = currDialogue;
     }
 }

@@ -11,36 +11,68 @@ using Random = UnityEngine.Random;
 public class DialogueNPC : MonoBehaviour
 {    
     [SerializeField]
-    public List<string> sentences;
-    private string currentDialogueChoices;
-    public TextMeshPro choices;
-    public TextMeshPro output;
+    public DialogueNode dialog;
+
+    private DialogueNode currDialogNode;
+    private List<string> currSentences;
+    private int index;
+    
+    private string currSpoken;
+    private List<string> choicesString;
+    private bool choicesMode;
+    [HideInInspector]
+    public DialogueObject output;
     private List<Char> alphabet = new List<Char>{'a', 'b', 'c','d','e'};
     
-    
-
     private void Start()
     {
+        choicesMode = false;
+        currDialogNode = dialog;
+        currSentences = currDialogNode.sentences;
+        output = DialogueObject.CreateDialogueObject(gameObject, "");
         GetNextDialogueChoices();
+
     }
 
+    private void Say(string dialog)
+    {
+        currSpoken = dialog;
+        output.Say(currSpoken);
+    }
     private void GetNextDialogueChoices()
     {
-        if (sentences.Count == 0)
+        if (currSentences.Count == index)
         {
-            currentDialogueChoices = "No more choices";
-            choices.text = currentDialogueChoices;
-            return;
+            index++;
+            Say(currSentences[index]);
         }
-        currentDialogueChoices = sentences[0];
-        choices.text = currentDialogueChoices;
-        sentences.RemoveAt(0);
+        else
+        {
+            if (currDialogNode.children.Count == 0)
+            {
+                Say("No more choices");
+            
+                return;
+            }
+            else
+            {
+                StringBuilder choices = new StringBuilder();
+                // choicesString= new List<string>();
+                foreach (var choice in currDialogNode.choices)
+                {
+                    // var aggregate = child.sentences.Aggregate("", (x, y) => x + " " + y);
+                    choices.Append(choice);
+                    choices.Append("\n");
+                }
+                Say(choices.ToString());
+                choicesMode = true;
+            }
+
+        }
+        
     }
 
-    private void SayALoud(String dialogue)
-    {
-        output.text = dialogue;
-    }
+
 
     private void GenerateResponse()
     {
@@ -52,22 +84,33 @@ public class DialogueNPC : MonoBehaviour
                 text.Append(c, Random.Range(1, 5));
             }
         }
-        SayALoud(text.ToString());
+        Say(text.ToString());
     }
     
 
-    public void Speak(String dialogueSpoken)
+    public void SpokenAt(String dialogueSpoken)
     {
-        int indexOfError = DialogueManager.GetIndexOfError(dialogueSpoken, currentDialogueChoices);
-        if (indexOfError == dialogueSpoken.Length && indexOfError == currentDialogueChoices.Length)
+        if (!choicesMode) return;
+        int i = 0;
+        foreach (var choice in currDialogNode.choices)
         {
-            GenerateResponse();
-            GetNextDialogueChoices();
+            int indexOfError = DialogueManager.GetIndexOfError(dialogueSpoken, choice);
+            if (indexOfError == -1)
+            {
+                ReceiveChoice(i);
+            }
+
+            i++;
         }
-        else
-        {
-            SayALoud("?");
-        }
+        Say("?");
+        
     }
-    
+
+    private void ReceiveChoice(int i)
+    {
+        index = 0;
+        currDialogNode = currDialogNode.children[i];
+        currSentences = currDialogNode.sentences;
+
+    }
 }
