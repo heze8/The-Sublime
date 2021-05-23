@@ -18,11 +18,9 @@ public class DialogueNPC : MonoBehaviour
     private int index;
     
     private string currSpoken;
-    private List<string> choicesString;
     private bool choicesMode;
     [HideInInspector]
     public DialogueObject output;
-    private List<Char> alphabet = new List<Char>{'a', 'b', 'c','d','e'};
     
     private void Start()
     {
@@ -31,7 +29,27 @@ public class DialogueNPC : MonoBehaviour
         currSentences = currDialogNode.sentences;
         output = DialogueObject.CreateDialogueObject(gameObject, "");
         GetNextDialogueChoices();
+        wait = true;
+    }
 
+    private bool wait;
+    private void Update()
+    {
+        if (!choicesMode)
+        {
+            if (wait)
+            {
+                StartCoroutine(Wait(3f, GetNextDialogueChoices));
+            }
+        }
+    }
+
+    IEnumerator Wait(float time, Action call)
+    {
+        wait = false;
+        yield return new WaitForSeconds(time);
+        wait = true;
+        call.Invoke();
     }
 
     private void Say(string dialog)
@@ -39,12 +57,14 @@ public class DialogueNPC : MonoBehaviour
         currSpoken = dialog;
         output.Say(currSpoken);
     }
+    
     private void GetNextDialogueChoices()
     {
-        if (currSentences.Count == index)
+
+        if (currSentences.Count > index)
         {
-            index++;
             Say(currSentences[index]);
+            index++;
         }
         else
         {
@@ -71,25 +91,11 @@ public class DialogueNPC : MonoBehaviour
         }
         
     }
-
-
-
-    private void GenerateResponse()
-    {
-        var text = new StringBuilder();
-        for (var i = 0; i < Random.Range(5, 20); i++)
-        {
-            foreach (Char c in alphabet)
-            {
-                text.Append(c, Random.Range(1, 5));
-            }
-        }
-        Say(text.ToString());
-    }
     
 
     public void SpokenAt(String dialogueSpoken)
     {
+        Debug.Log(dialogueSpoken);
         if (!choicesMode) return;
         int i = 0;
         foreach (var choice in currDialogNode.choices)
@@ -98,6 +104,7 @@ public class DialogueNPC : MonoBehaviour
             if (indexOfError == -1)
             {
                 ReceiveChoice(i);
+                return;
             }
 
             i++;
@@ -111,6 +118,6 @@ public class DialogueNPC : MonoBehaviour
         index = 0;
         currDialogNode = currDialogNode.children[i];
         currSentences = currDialogNode.sentences;
-
+        GetNextDialogueChoices();
     }
 }

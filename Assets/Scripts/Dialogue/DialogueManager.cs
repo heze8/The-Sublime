@@ -101,16 +101,18 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private void OnEnter()
     {
-        if (isSpeaking)
+        if (isSpeaking && typeManager.IsDialog())
         {
             SpeakToNearby();
             isSpeaking = false;
             DialogueObject.CreateDialogueObject(gameObject, typeManager.GetCurrentDialogueInput(), diaDuration);
             typeManager.ClearDialogue();
         }
-        else 
+        else
+        {
             isSpeaking = true;
-        //GetNextDialogueChoices();
+
+        }
 
     }
     
@@ -138,7 +140,7 @@ public class DialogueManager : Singleton<DialogueManager>
     /// <returns></returns> the index by char of the error, returns the -1 if no error.
     public static int GetIndexOfError (string firstSentence, string secondSentence)
     {
-        if (!secondSentence.Any()) return -1;
+        if (!secondSentence.Any()) return 0;
         
         var sentenceChars = secondSentence.ToCharArray();
         int dialogueLength = firstSentence.Length;
@@ -148,7 +150,7 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             if (i >= sentenceChars.Length)
             {
-                return -1;
+                return dialogueLength;
             }
             if ( !sentenceChars[i].Equals(firstSentence[i]))
             {
@@ -156,6 +158,6 @@ public class DialogueManager : Singleton<DialogueManager>
             }
         }
 
-        return dialogueLength;
+        return -1;
     }
 }

@@ -64,4 +64,10 @@ public class Typing
     {
         return myDialogue.ToString();
     }
+
+    public bool IsDialog()
+    {
+        return !(myDialogue.Length <= 0);
+
+    }
 }
