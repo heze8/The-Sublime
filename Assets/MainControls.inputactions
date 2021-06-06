@@ -1,0 +1,153 @@
+{
+    "name": "MainControls",
+    "maps": [
+        {
+            "name": "wasd",
+            "id": "f1445c93-962c-490a-9aaa-7ae0a6d7110c",
+            "actions": [
+                {
+                    "name": "W",
+                    "type": "Value",
+                    "id": "2d9c4543-5eb0-4391-aa9e-9b59c68752bf",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "A",
+                    "type": "Value",
+                    "id": "8d23b37e-767c-4f10-ac25-19bd0a1616c4",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "S",
+                    "type": "Value",
+                    "id": "e0ac2cf5-6357-4762-b12d-d42eeebac173",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D",
+                    "type": "Value",
+                    "id": "4061c323-1b71-49b8-ae01-c89b8fa053d6",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "WASD",
+                    "type": "Value",
+                    "id": "79ee7a0e-cc05-4ba0-a91b-868e78f9f143",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c102c1fb-0891-4073-87b8-023d917550fd",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "W",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5699a4d0-f6be-4ffb-8f34-4dc1a7c8a31f",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4700324-3fc7-476f-8a5f-bf88e181568e",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "S",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3aca2a5f-ad8d-451e-a129-3b6976048160",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "bf4c0a7d-c2e8-4c49-9cfc-b4c46d21de02",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "71b226cb-28cc-46fc-96bd-d2d3a871b9f8",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "c7f81ac7-9096-4fe3-9cff-0c1b653cfb3f",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "11fe9ee9-4258-48ef-bddc-c43d38968b7e",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "6d8056ec-03c3-46dc-9aaa-191ba0bd8d40",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

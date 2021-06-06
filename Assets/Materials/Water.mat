@@ -99,7 +99,7 @@ Material:
     m_Ints: []
     m_Floats:
     - Depth: 0.5
-    - Displacement: -0.31
+    - Displacement: -0.19
     - Normal_Strength: 0.697
     - Smoothness: 0.669
     - _AlphaClip: 0

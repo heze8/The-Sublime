@@ -33,6 +33,8 @@ public class DialogueNPC : MonoBehaviour
     }
 
     private bool wait;
+    [SerializeField] private Color colorChoices;
+
     private void Update()
     {
         if (!choicesMode)
@@ -52,10 +54,10 @@ public class DialogueNPC : MonoBehaviour
         call.Invoke();
     }
 
-    private void Say(string dialog)
+    private void Say(string dialog, Color color = new Color())
     {
         currSpoken = dialog;
-        output.Say(currSpoken);
+        output.Say(currSpoken, color);
     }
     
     private void GetNextDialogueChoices()
@@ -84,7 +86,7 @@ public class DialogueNPC : MonoBehaviour
                     choices.Append(choice);
                     choices.Append("\n");
                 }
-                Say(choices.ToString());
+                Say(choices.ToString(), colorChoices);
                 choicesMode = true;
             }
 

@@ -16,6 +16,8 @@ public class DialogueObject : MonoBehaviour
     [HideInInspector]
     public TextMeshPro textMesh;
 
+    private Color originalColor;
+
     /// <summary>
     /// Create dialogue object in parent location
     /// </summary>
@@ -46,6 +48,7 @@ public class DialogueObject : MonoBehaviour
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         textMesh = GetComponentInChildren<TextMeshPro>();
+        originalColor = textMesh.color;
     }
 
     public void Update()
@@ -65,8 +68,17 @@ public class DialogueObject : MonoBehaviour
         textMesh.color = color;
     }
 
-    public void Say(string currDialogue)
+    public void Say(string currDialogue, Color color = new Color())
     {
+        if (color != new Color())
+        {
+            //color added
+            textMesh.color = color;
+        }
+        else
+        {
+            textMesh.color = originalColor;
+        }
         textMesh.text = currDialogue;
     }
 }
