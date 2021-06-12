@@ -545,6 +545,7 @@ MonoBehaviour:
       choices: []
       children: []
   output: {fileID: 0}
+  dialogOffset: {x: -20.96, y: 40, z: 0}
   colorChoices: {r: 1, g: 0, b: 0, a: 1}
 --- !u!61 &227055684
 BoxCollider2D:
@@ -734,7 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outputText: {fileID: 859710187}
-  speakingRadius: 10
+  speakingRadius: 20.22
   speakingLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -757,7 +758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.43999982, y: 2.9499998}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &859710185 stripped
@@ -961,7 +962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915587646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8, y: 10.349999, z: -38}
+  m_LocalPosition: {x: 1.8, y: 66, z: -135.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1740878248}
@@ -1145,6 +1146,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 652219093}
     m_Modifications:
+    - target: {fileID: 287999135918234262, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
+      propertyPath: m_Size.x
+      value: 13.311627
+      objectReference: {fileID: 0}
+    - target: {fileID: 287999135918234262, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
+      propertyPath: m_Size.y
+      value: 8.04375
+      objectReference: {fileID: 0}
+    - target: {fileID: 833457492605313971, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
+      propertyPath: m_text
+      value: jasd
+      objectReference: {fileID: 0}
+    - target: {fileID: 833457492605313971, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060452433004526210, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8209646000813863267, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
       propertyPath: m_Name
       value: DialoguePrefab
@@ -1179,11 +1200,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8594704007093565322, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20
+      value: 48.5463
       objectReference: {fileID: 0}
     - target: {fileID: 8594704007093565322, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 5
+      value: 43.6288
       objectReference: {fileID: 0}
     - target: {fileID: 8594704007093565322, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1215,11 +1236,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8594704007093565322, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 31.3
       objectReference: {fileID: 0}
     - target: {fileID: 8594704007093565322, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 58.8
       objectReference: {fileID: 0}
     - target: {fileID: 8594704007093565322, guid: 40ce9a8a38a9f594eb3aec2e78ac3e6f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1769,8 +1790,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21.731148, y: 5.344752, z: 8.143728}
-  m_Center: {x: 2.9277763, y: -6.24119, z: 5.745467}
+  m_Size: {x: 29.639332, y: 5.3447514, z: 8.143728}
+  m_Center: {x: 2.216051, y: -6.24119, z: 5.745467}
 --- !u!4 &1678282983
 Transform:
   m_ObjectHideFlags: 0
@@ -1876,7 +1897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 0.5, y: 3.85, z: -36}
+  ShoulderOffset: {x: 0.5, y: 59.5, z: -133.98}
   VerticalArmLength: 0.4
   CameraSide: 1
   CameraDistance: 2

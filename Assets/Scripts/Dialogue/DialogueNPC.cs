@@ -21,13 +21,14 @@ public class DialogueNPC : MonoBehaviour
     private bool choicesMode;
     [HideInInspector]
     public DialogueObject output;
-    
+
+    public Vector3 dialogOffset;
     private void Start()
     {
         choicesMode = false;
         currDialogNode = dialog;
         currSentences = currDialogNode.sentences;
-        output = DialogueObject.CreateDialogueObject(gameObject, "");
+        output = DialogueObject.CreateDialogueObject(gameObject,dialogOffset, "");
         GetNextDialogueChoices();
         wait = true;
     }

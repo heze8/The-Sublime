@@ -18,15 +18,17 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] 
     private float diaDuration;
 
+    private Vector3 offset;
     private void Start()
     {
         typeManager = new Typing();
         isSpeaking = false;
+        offset = outputText.transform.localPosition;
     }
 
     public void OnDrawGizmosSelected()
     {
-        Gizmos.DrawSphere(gameObject.transform.position, speakingRadius);
+        //Gizmos.DrawSphere(gameObject.transform.position, speakingRadius);
     }
 
     private void Update()
@@ -105,7 +107,7 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             SpeakToNearby();
             isSpeaking = false;
-            DialogueObject.CreateDialogueObject(gameObject, typeManager.GetCurrentDialogueInput(), diaDuration);
+            DialogueObject.CreateDialogueObject(gameObject,offset ,typeManager.GetCurrentDialogueInput(), diaDuration);
             typeManager.ClearDialogue();
         }
         else

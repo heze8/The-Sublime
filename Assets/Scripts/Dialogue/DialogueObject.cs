@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[ExecuteAlways]
 [System.Serializable]
 public class DialogueObject : MonoBehaviour
 {
@@ -22,11 +23,12 @@ public class DialogueObject : MonoBehaviour
     /// Create dialogue object in parent location
     /// </summary>
     /// <returns></returns> the dialogue game object
-    public static DialogueObject CreateDialogueObject(GameObject parent, string sentence, float duration = -1)
+    public static DialogueObject CreateDialogueObject(GameObject parent, Vector3 dialogOffset, string sentence,
+        float duration = -1)
     {
-        
+
         var dialogPrefab = DialogueManager.Instance.dialogPrefab;
-        var instantiate = Instantiate(dialogPrefab, parent.transform.position, parent.transform.rotation, parent.transform);
+        var instantiate = Instantiate(dialogPrefab, parent.transform.position +dialogOffset, parent.transform.rotation, parent.transform);
 
         var dialogueObject = instantiate.GetComponent<DialogueObject>();
         dialogueObject.textMesh = instantiate.GetComponentInChildren<TextMeshPro>();
