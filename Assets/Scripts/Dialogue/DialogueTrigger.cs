@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DialogueTrigger : MonoBehaviour
+namespace Dialogue
 {
-    public DialogueObject dialogueSentence;
+    public class DialogueTrigger : MonoBehaviour
+    {
+        public DialogueObject dialogueSentence;
+    }
 }

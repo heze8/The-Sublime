@@ -1,126 +1,125 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Text;
-using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class DialogueNPC : MonoBehaviour
-{    
-    [SerializeField]
-    public DialogueNode dialog;
+namespace Dialogue
+{
+    public class DialogueNPC : MonoBehaviour
+    {    
+        [SerializeField]
+        public DialogueNode dialog;
 
-    private DialogueNode currDialogNode;
-    private List<string> currSentences;
-    private int index;
+        private DialogueNode currDialogNode;
+        private List<string> currSentences;
+        private int index;
     
-    private string currSpoken;
-    private bool choicesMode;
-    [HideInInspector]
-    public DialogueObject output;
+        private string currSpoken;
+        private bool choicesMode;
+        [HideInInspector]
+        public DialogueObject output;
 
-    public Vector3 dialogOffset;
-    private void Start()
-    {
-        choicesMode = false;
-        currDialogNode = dialog;
-        currSentences = currDialogNode.sentences;
-        output = DialogueObject.CreateDialogueObject(gameObject,dialogOffset, "");
-        GetNextDialogueChoices();
-        wait = true;
-    }
-
-    private bool wait;
-    [SerializeField] private Color colorChoices;
-
-    private void Update()
-    {
-        if (!choicesMode)
+        public Vector3 dialogOffset;
+        private void Start()
         {
-            if (wait)
+            choicesMode = false;
+            currDialogNode = dialog;
+            currSentences = currDialogNode.sentences;
+            output = DialogueObject.CreateDialogueObject(gameObject,dialogOffset, "");
+            GetNextDialogueChoices();
+            wait = true;
+        }
+
+        private bool wait;
+        [SerializeField] private Color colorChoices;
+
+        private void Update()
+        {
+            if (!choicesMode)
             {
-                StartCoroutine(Wait(3f, GetNextDialogueChoices));
+                if (wait)
+                {
+                    StartCoroutine(Wait(3f, GetNextDialogueChoices));
+                }
             }
         }
-    }
 
-    IEnumerator Wait(float time, Action call)
-    {
-        wait = false;
-        yield return new WaitForSeconds(time);
-        wait = true;
-        call.Invoke();
-    }
-
-    private void Say(string dialog, Color color = new Color())
-    {
-        currSpoken = dialog;
-        output.Say(currSpoken, color);
-    }
-    
-    private void GetNextDialogueChoices()
-    {
-
-        if (currSentences.Count > index)
+        IEnumerator Wait(float time, Action call)
         {
-            Say(currSentences[index]);
-            index++;
+            wait = false;
+            yield return new WaitForSeconds(time);
+            wait = true;
+            call.Invoke();
         }
-        else
+
+        private void Say(string dialog, Color color = new Color())
         {
-            if (currDialogNode.children.Count == 0)
+            currSpoken = dialog;
+            output.Say(currSpoken, color);
+        }
+    
+        private void GetNextDialogueChoices()
+        {
+
+            if (currSentences.Count > index)
             {
-                Say("No more choices");
-            
-                return;
+                Say(currSentences[index]);
+                index++;
             }
             else
             {
-                StringBuilder choices = new StringBuilder();
-                // choicesString= new List<string>();
-                foreach (var choice in currDialogNode.choices)
+                if (currDialogNode.children.Count == 0)
                 {
-                    // var aggregate = child.sentences.Aggregate("", (x, y) => x + " " + y);
-                    choices.Append(choice);
-                    choices.Append("\n");
+                    Say("No more choices");
+            
+                    return;
                 }
-                Say(choices.ToString(), colorChoices);
-                choicesMode = true;
-            }
+                else
+                {
+                    StringBuilder choices = new StringBuilder();
+                    // choicesString= new List<string>();
+                    foreach (var choice in currDialogNode.choices)
+                    {
+                        // var aggregate = child.sentences.Aggregate("", (x, y) => x + " " + y);
+                        choices.Append(choice);
+                        choices.Append("\n");
+                    }
+                    Say(choices.ToString(), colorChoices);
+                    choicesMode = true;
+                }
 
-        }
+            }
         
-    }
+        }
     
 
-    public void SpokenAt(String dialogueSpoken)
-    {
-        Debug.Log(dialogueSpoken);
-        if (!choicesMode) return;
-        int i = 0;
-        foreach (var choice in currDialogNode.choices)
+        public void SpokenAt(String dialogueSpoken)
         {
-            int indexOfError = DialogueManager.GetIndexOfError(dialogueSpoken, choice);
-            if (indexOfError == -1)
+            Debug.Log(dialogueSpoken);
+            if (!choicesMode) return;
+            int i = 0;
+            foreach (var choice in currDialogNode.choices)
             {
-                ReceiveChoice(i);
-                return;
+                int indexOfError = DialogueManager.GetIndexOfError(dialogueSpoken, choice);
+                if (indexOfError == -1)
+                {
+                    ReceiveChoice(i);
+                    return;
+                }
+
+                i++;
             }
-
-            i++;
-        }
-        Say("?");
+            Say("?");
         
-    }
+        }
 
-    private void ReceiveChoice(int i)
-    {
-        index = 0;
-        currDialogNode = currDialogNode.children[i];
-        currSentences = currDialogNode.sentences;
-        GetNextDialogueChoices();
+        private void ReceiveChoice(int i)
+        {
+            index = 0;
+            currDialogNode = currDialogNode.children[i];
+            currSentences = currDialogNode.sentences;
+            GetNextDialogueChoices();
+        }
     }
 }
